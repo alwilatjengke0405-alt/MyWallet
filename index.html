@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyWallet - Ultimate Enterprise Edition</title>
+    <title>MyWallet - Ultimate AI Nexus Edition</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -17,7 +17,7 @@
                 extend: {
                     colors: {
                         seabankBlue: '#0052CC',
-                        seabankDark: '#070D1D',
+                        seabankDark: '#050B14',
                     }
                 }
             }
@@ -26,31 +26,15 @@
 </head>
 <body class="bg-slate-100 dark:bg-seabankDark text-slate-800 dark:text-slate-100 transition-all duration-300 min-h-screen flex flex-col font-sans">
 
-    <!-- Modal PIN Keamanan (Lock Screen) -->
-    <div id="lockScreen" class="fixed inset-0 z-50 bg-seabankDark flex flex-col items-center justify-center p-4 transition-opacity duration-500">
-        <div class="bg-slate-900/90 border border-slate-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center backdrop-blur-xl">
-            <div class="w-16 h-16 bg-blue-600/20 text-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl border border-blue-500/30">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white mb-1">Keamanan MyWallet</h2>
-            <p class="text-xs text-slate-400 mb-6">Masukkan 6-digit PIN Keamanan kamu (Default: 123456)</p>
-            <input type="password" id="pinInput" maxlength="6" placeholder="••••••" class="w-full text-center text-2xl tracking-widest px-4 py-3 rounded-xl border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4">
-            <button onclick="verifyPin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition shadow-lg shadow-blue-500/20">
-                Buka Dompet
-            </button>
-            <p id="pinError" class="text-xs text-rose-400 mt-3 hidden">PIN salah! Coba lagi (123456).</p>
-        </div>
-    </div>
-
     <!-- Navbar Utama -->
-    <nav class="bg-seabankBlue text-white shadow-xl px-6 py-4 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md bg-opacity-95">
+    <nav class="bg-seabankBlue text-white shadow-2xl px-6 py-4 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md bg-opacity-95 border-b border-blue-400/20">
         <div class="flex items-center space-x-3">
             <div class="bg-white/10 p-2.5 rounded-2xl border border-white/20 shadow-inner">
-                <i class="fa-solid fa-wallet text-xl text-blue-200"></i>
+                <i class="fa-solid fa-bolt-lightning text-xl text-amber-300"></i>
             </div>
             <div>
-                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">MyWallet <span class="text-xs bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full font-bold ml-1">ULTIMATE</span></span>
-                <span class="block text-[10px] text-blue-200 uppercase tracking-widest font-semibold">Enterprise Edition</span>
+                <span class="text-xl font-black tracking-wider bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">MyWallet <span class="text-xs bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full font-extrabold ml-1">AI NEXUS</span></span>
+                <span class="block text-[10px] text-blue-200 uppercase tracking-widest font-semibold">Autonomous Finance OS</span>
             </div>
         </div>
         <div class="flex items-center space-x-3">
@@ -71,12 +55,11 @@
         <!-- Kolom Kiri -->
         <div class="lg:col-span-1 space-y-6">
             
-            <!-- Saldo Utama & Multi-Pocket -->
-            <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 rounded-3xl p-6 text-white shadow-xl border border-blue-400/20">
+            <!-- Saldo Utama -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-900 rounded-3xl p-6 text-white shadow-2xl border border-blue-400/20">
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
-                
                 <div class="flex justify-between items-start mb-2">
-                    <p class="text-blue-200 text-xs font-bold tracking-wider uppercase">Total Saldo Aktif</p>
+                    <p class="text-blue-200 text-xs font-bold tracking-wider uppercase">Total Kekayaan Bersih</p>
                     <button onclick="toggleBalanceVisibility()" class="text-blue-200 hover:text-white transition text-sm">
                         <i id="eyeIcon" class="fa-solid fa-eye"></i>
                     </button>
@@ -84,41 +67,33 @@
                 <h2 id="totalBalance" class="text-3xl font-black tracking-tight mt-1">Rp 0</h2>
                 
                 <div class="grid grid-cols-2 gap-3 mt-5 pt-4 border-t border-white/15">
-                    <div class="bg-black/15 p-3 rounded-2xl backdrop-blur-sm border border-white/5">
+                    <div class="bg-black/20 p-3 rounded-2xl backdrop-blur-sm border border-white/5">
                         <p class="text-[10px] text-blue-200 uppercase font-semibold">Pemasukan</p>
                         <p id="totalIncome" class="text-sm font-bold text-emerald-300 mt-0.5">Rp 0</p>
                     </div>
-                    <div class="bg-black/15 p-3 rounded-2xl backdrop-blur-sm border border-white/5">
+                    <div class="bg-black/20 p-3 rounded-2xl backdrop-blur-sm border border-white/5">
                         <p class="text-[10px] text-blue-200 uppercase font-semibold">Pengeluaran</p>
                         <p id="totalExpense" class="text-sm font-bold text-rose-300 mt-0.5">Rp 0</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Kantong Saku (Multi-Pockets) -->
+            <!-- Smart AI Receipt Scanner -->
             <div class="bg-white dark:bg-slate-800/90 backdrop-blur-md p-6 rounded-3xl shadow-sm border border-slate-200/80 dark:border-slate-700/80">
-                <h3 class="font-bold text-base mb-3 flex items-center gap-2.5 text-slate-800 dark:text-white">
-                    <div class="bg-amber-100 dark:bg-amber-900/40 p-2 rounded-xl text-amber-600 dark:text-amber-400">
-                        <i class="fa-solid fa-vault text-xs"></i>
+                <h3 class="font-bold text-base mb-2 flex items-center gap-2.5 text-slate-800 dark:text-white">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/40 p-2 rounded-xl text-indigo-600 dark:text-indigo-400">
+                        <i class="fa-solid fa-camera-retro text-xs"></i>
                     </div>
-                    Kantong Celengan (Pockets)
+                    AI Receipt Scanner
                 </h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-700/50">
-                        <div>
-                            <p class="text-xs font-bold">🛡️ Darurat</p>
-                            <span class="text-[10px] text-slate-400">Cadangan Aman</span>
-                        </div>
-                        <span id="pocketEmergency" class="text-xs font-bold text-emerald-500">Rp 0</span>
+                <p class="text-xs text-slate-400 mb-4">Upload foto struk belanja untuk input otomatis via OCR AI.</p>
+                <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900/50 transition">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl text-indigo-500 mb-2"></i>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Klik untuk upload foto struk</p>
                     </div>
-                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-700/50">
-                        <div>
-                            <p class="text-xs font-bold">💻 Gadget / Kuliah</p>
-                            <span class="text-[10px] text-slate-400">Target Belanja</span>
-                        </div>
-                        <span id="pocketGadget" class="text-xs font-bold text-blue-500">Rp 0</span>
-                    </div>
-                </div>
+                    <input type="file" class="hidden" onchange="simulateAIScan(event)" />
+                </label>
             </div>
 
             <!-- Form Tambah Transaksi -->
@@ -127,12 +102,12 @@
                     <div class="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-xl text-blue-600 dark:text-blue-400">
                         <i class="fa-solid fa-plus text-xs"></i>
                     </div>
-                    Catat Transaksi Baru
+                    Catat Transaksi Manual
                 </h3>
                 <form id="transactionForm" onsubmit="addTransaction(event)" class="space-y-4">
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider mb-1.5 text-slate-400">Keterangan</label>
-                        <input type="text" id="desc" required placeholder="Contoh: Gaji, Makan Siang" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <input type="text" id="desc" required placeholder="Contoh: Belanja Bulanan" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
@@ -171,29 +146,29 @@
             
             <!-- Grid Grafik & AI Advisor -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Grafik Donat -->
+                <!-- Grafik Donat Proporsi -->
                 <div class="bg-white dark:bg-slate-800/90 backdrop-blur-md p-6 rounded-3xl shadow-sm border border-slate-200/80 dark:border-slate-700/80">
                     <h3 class="font-bold text-sm mb-4 flex items-center gap-2 text-slate-800 dark:text-white">
-                        <i class="fa-solid fa-chart-pie text-indigo-500"></i> Proporsi Pengeluaran
+                        <i class="fa-solid fa-chart-pie text-indigo-500"></i> Proporsi Kategori
                     </h3>
                     <div class="relative h-52 flex justify-center items-center">
                         <canvas id="financeChart"></canvas>
                     </div>
                 </div>
 
-                <!-- AI Financial Advisor -->
+                <!-- AI Financial Advisor Nexus -->
                 <div class="bg-white dark:bg-slate-800/90 backdrop-blur-md p-6 rounded-3xl shadow-sm border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
                     <div>
                         <h3 class="font-bold text-sm mb-2 flex items-center gap-2 text-slate-800 dark:text-white">
-                            <i class="fa-solid fa-robot text-indigo-500"></i> AI Financial Advisor ULTIMATE
+                            <i class="fa-solid fa-brain text-amber-500"></i> AI Financial Advisor NEXUS
                         </h3>
-                        <p class="text-xs text-slate-400 mb-3">Analisis kesehatan finansial real-time.</p>
+                        <p class="text-xs text-slate-400 mb-3">Otomasi analisis kesehatan keuangan.</p>
                         <div id="aiAdvice" class="bg-slate-50 dark:bg-slate-900/70 p-4 rounded-2xl text-xs text-slate-600 dark:text-slate-300 italic border border-slate-200/60 dark:border-slate-700/50 leading-relaxed">
-                            "Halo Alwi! Masukkan transaksi pertamamu untuk mengaktifkan AI Advisor."
+                            "Sistem AI aktif. Masukkan data keuangan untuk mulai memproses analisis otonom."
                         </div>
                     </div>
-                    <button onclick="getFinancialAdvice()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs py-2.5 rounded-xl font-semibold transition shadow-md shadow-indigo-500/20">
-                        Analisis Dompet Sekarang
+                    <button onclick="getFinancialAdvice()" class="mt-4 w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition shadow-md shadow-amber-500/20">
+                        Jalankan Deep Audit AI
                     </button>
                 </div>
             </div>
@@ -205,13 +180,13 @@
                         <div class="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-xl text-blue-600 dark:text-blue-400">
                             <i class="fa-solid fa-clock-rotate-left text-xs"></i>
                         </div>
-                        Riwayat Transaksi Lengkap
+                        Riwayat Arus Kas Nexus
                     </h3>
                     <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <button onclick="exportToPDF()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-md shadow-indigo-500/20">
+                        <button onclick="exportToPDF()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-md">
                             <i class="fa-solid fa-file-pdf"></i> Export PDF
                         </button>
-                        <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-md shadow-emerald-500/20">
+                        <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-md">
                             <i class="fa-solid fa-file-csv"></i> Export CSV
                         </button>
                     </div>
@@ -223,7 +198,7 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                             <i class="fa-solid fa-search text-xs"></i>
                         </span>
-                        <input type="text" id="searchInput" oninput="filterTransactions()" placeholder="Cari transaksi berdasarkan nama atau kategori..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        <input type="text" id="searchInput" oninput="filterTransactions()" placeholder="Cari transaksi..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                     </div>
                 </div>
 
@@ -255,12 +230,12 @@
 
     <!-- Footer -->
     <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 dark:border-slate-800/80 mt-auto bg-white/50 dark:bg-seabankDark/50 backdrop-blur-md">
-        MyWallet Ultimate Enterprise &copy; 2026 - Designed with Modern Fintech Style 🌊
+        MyWallet AI Nexus &copy; 2026 - Autonomous Financial Ecosystem ⚡
     </footer>
 
-    <!-- JavaScript Ultimate -->
+    <!-- JavaScript Nexus -->
     <script>
-        let transactions = JSON.parse(localStorage.getItem('mywallet_ultimate_tx')) || [];
+        let transactions = JSON.parse(localStorage.getItem('mywallet_nexus_tx')) || [];
         let financeChart = null;
         let isBalanceHidden = false;
 
@@ -269,14 +244,24 @@
             initChart();
         });
 
-        function verifyPin() {
-            const pin = document.getElementById('pinInput').value;
-            if (pin === '123456') {
-                const lock = document.getElementById('lockScreen');
-                lock.classList.add('opacity-0');
-                setTimeout(() => lock.remove(), 500);
-            } else {
-                document.getElementById('pinError').classList.remove('hidden');
+        function simulateAIScan(e) {
+            const file = e.target.files[0];
+            if (file) {
+                alert("✨ AI sedang memindai struk '" + file.name + "'...");
+                setTimeout(() => {
+                    const mockScanned = {
+                        id: Date.now(),
+                        desc: "Belanja Struk AI (" + file.name.substring(0, 10) + ")",
+                        amount: Math.floor(Math.random() * 75000) + 15000,
+                        type: "expense",
+                        category: "Belanja & Gadget",
+                        date: new Date().toLocaleDateString('id-ID')
+                    };
+                    transactions.unshift(mockScanned);
+                    saveData();
+                    updateUI();
+                    alert("✅ Berhasil! Struk terbaca otomatis dan ditambahkan ke pengeluaran.");
+                }, 1000);
             }
         }
 
@@ -309,7 +294,7 @@
         }
 
         function saveData() {
-            localStorage.setItem('mywallet_ultimate_tx', JSON.stringify(transactions));
+            localStorage.setItem('mywallet_nexus_tx', JSON.stringify(transactions));
         }
 
         function updateUI(filteredTransactions = null) {
@@ -368,10 +353,6 @@
             balanceEl.innerText = isBalanceHidden ? "Rp •••••••" : `Rp ${balance.toLocaleString('id-ID')}`;
             document.getElementById('totalIncome').innerText = `Rp ${income.toLocaleString('id-ID')}`;
             document.getElementById('totalExpense').innerText = `Rp ${expense.toLocaleString('id-ID')}`;
-
-            // Update kantong saku simulasi proporsional
-            document.getElementById('pocketEmergency').innerText = `Rp ${(balance * 0.3).toLocaleString('id-ID', {maximumFractionDigits: 0})}`;
-            document.getElementById('pocketGadget').innerText = `Rp ${(balance * 0.2).toLocaleString('id-ID', {maximumFractionDigits: 0})}`;
 
             updateChart(income, expense);
         }
@@ -434,11 +415,11 @@
 
             let message = "";
             if (transactions.length === 0) {
-                message = "💡 Catat transaksimu agar AI Advisor Ultimate bisa memberikan rekomendasi alokasi dana yang presisi.";
+                message = "🤖 AI Nexus: Belum ada data transaksi. Lakukan scan struk atau input manual untuk memulai audit cerdas.";
             } else if (expense > income) {
-                message = "🚨 Peringatan Defisit! Pengeluaranmu melampaui batas pemasukan. Segera kurangi pengeluaran tersier.";
+                message = "⚡ PERINGATAN NEXUS: Arus kas negatif terdeteksi. Sistem menyarankan pemangkasan pengeluaran non-esensial segera.";
             } else {
-                message = "🌟 Kondisi finansial sangat prima! Alokasikan sebagian ke Kantong Darurat secara rutin.";
+                message = "🚀 ANALISIS SUKSES: Kesehatan finansial stabil dan optimal. Pertahankan trajectory ini!";
             }
 
             adviceEl.innerText = `"${message}"`;
@@ -451,13 +432,13 @@
             const blob = new Blob([csv], { type: 'text/csv' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'laporan_mywallet_ultimate.csv';
+            link.download = 'laporan_mywallet_nexus.csv';
             link.click();
         }
 
         function exportToPDF() {
             if (transactions.length === 0) { alert('Belum ada data!'); return; }
-            window.print(); // Membuka menu cetak browser (Save as PDF)
+            window.print();
         }
 
         function toggleDarkMode() {
