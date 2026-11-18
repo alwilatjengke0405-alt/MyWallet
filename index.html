@@ -235,6 +235,7 @@
 
     <!-- JavaScript Nexus -->
     <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5Cc7Ep9sCQWkthlcPOu1w0WNIxMDUF5SG3SVSPiyGUwoCcsdjvsJMC5fnWc55Ta4leA/exec";
         let transactions = JSON.parse(localStorage.getItem('mywallet_nexus_tx')) || [];
         let financeChart = null;
         let isBalanceHidden = false;
@@ -242,7 +243,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateUI();
             initChart();
+            syncFromSheets();
         });
+
+        async function syncFromSheets() {
+            if (!SCRIPT_URL || SCRIPT_URL.includes("TEMPEL_URL")) return;
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    transactions = data;
+                    saveData();
+                    updateUI();
+                }
+            } catch (err) {
+                console.error("Gagal mengambil data dari Sheets:", err);
+            }
+        }
+
+        async function sendToSheets(action, data = null, id = null) {
+            if (!SCRIPT_URL || SCRIPT_URL.includes("TEMPEL_URL")) return;
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action, data, id })
+                });
+            } catch (err) {
+                console.error("Gagal mengirim data ke Sheets:", err);
+            }
+        }
 
         function simulateAIScan(e) {
             const file = e.target.files[0];
@@ -260,6 +290,7 @@
                     transactions.unshift(mockScanned);
                     saveData();
                     updateUI();
+                    sendToSheets('add', mockScanned);
                     alert("✅ Berhasil! Struk terbaca otomatis dan ditambahkan ke pengeluaran.");
                 }, 1000);
             }
@@ -285,12 +316,14 @@
             saveData();
             document.getElementById('transactionForm').reset();
             updateUI();
+            sendToSheets('add', newTx);
         }
 
         function deleteTransaction(id) {
-            transactions = transactions.filter(tx => tx.id !== id);
+            transactions = transactions.filter(tx => String(tx.id) !== String(id));
             saveData();
             updateUI();
+            sendToSheets('delete', null, id);
         }
 
         function saveData() {
@@ -307,8 +340,8 @@
             let expense = 0;
 
             transactions.forEach(tx => {
-                if (tx.type === 'income') income += tx.amount;
-                else expense += tx.amount;
+                if (tx.type === 'income') income += Number(tx.amount);
+                else expense += Number(tx.amount);
             });
 
             if (dataToRender.length === 0) {
@@ -331,7 +364,7 @@
                             </div>
                         </td>
                         <td class="py-3.5 px-3 font-bold ${tx.type === 'income' ? 'text-emerald-500' : 'text-rose-500'}">
-                            ${tx.type === 'income' ? '+' : '-'} Rp ${tx.amount.toLocaleString('id-ID')}
+                            ${tx.type === 'income' ? '+' : '-'} Rp ${Number(tx.amount).toLocaleString('id-ID')}
                         </td>
                         <td class="py-3.5 px-3">
                             <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${tx.type === 'income' ? 'bg-emerald-100/80 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 'bg-rose-100/80 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400'}">
@@ -409,8 +442,8 @@
         }
 
         function getFinancialAdvice() {
-            let income = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
-            let expense = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+            let income = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + Number(t.amount), 0);
+            let expense = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + Number(t.amount), 0);
             let adviceEl = document.getElementById('aiAdvice');
 
             let message = "";
